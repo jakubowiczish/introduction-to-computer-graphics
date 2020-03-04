@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<!-- The previous line tells the browser, that the page uses the HTML5 standard. -->
+
+<html>
+
+<head>
+    <title>Example 03 - Rotation</title>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+    <!-- The following meta line optimizes the site for mobile devices. It sets the viewport size
+       to the screen size, so it will be displayed maximized, but unscaled. -->
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <style type="text/css">
+        body {
+            /* Set the background color of the HTML page to black */
+            background-color: #000000;
+
+            /* Hide oversized content. This prevents the scroll bars. */
+            overflow: hidden;
+        }
+    </style>
+    <!-- Include two libraries
+       1. Three.js (core library)
+       2. Detector.js (checks the browsers WebGL capabilities) -->
+    <script src="three.js"></script>
+    <script src="Detector.js"></script>
+</head>
+
+<body>
+    <!-- This is the DIV element which will contain the WebGL canvas. To be identifiable lateron,
+       the id 'WebGLCanvas' is applied to it. -->
+    <div id="WebGLCanvas"> </div>
+
+    <!-- This JavaScript block encloses the Three.js commands -->
+    <script>
+        // Global scene object
+        var scene;
+
+        // Global camera object
+        var camera;
+
+        // Global mesh object of the triangle
+        var triangleMesh;
+        var triangleMesh2;
+        var triangleMesh3;
+
+        var triangleMesh4;
+
+        // Global mesh object of the square
+        var squareMesh;
+        var squareMesh2;
+        var squareMesh3;
+
+        var circle;
+        var circle2;
+
+        var pyramidMesh;
+        var pyramidMesh2;
+        var pyramidMesh3;
+
+        initializeScene();
+
+        animateScene();
+
+        /**
+         * Initialze the scene.
+         */
+        function initializeScene() {
+
+            if (Detector.webgl) {
+                renderer = new THREE.WebGLRenderer({
+                    antialias: true
+                });
+            } else {
+                renderer = new THREE.CanvasRenderer();
+            }
+
+            renderer.setClearColor(0x000000, 1);
+
+            canvasWidth = window.innerWidth;
+            canvasHeight = window.innerHeight;
+
+            renderer.setSize(canvasWidth, canvasHeight);
+
+            document.getElementById("WebGLCanvas").appendChild(renderer.domElement);
+
+
+            scene = new THREE.Scene();
+
+            camera = new THREE.PerspectiveCamera(45, canvasWidth / canvasHeight, 1, 100);
+            camera.position.set(0, 0, 10);
+            camera.lookAt(scene.position);
+            scene.add(camera);
+
+            var triangleGeometry = new THREE.Geometry();
+            triangleGeometry.vertices.push(new THREE.Vector3(0.0, 1.0, 0.0));
+            triangleGeometry.vertices.push(new THREE.Vector3(-1.0, -1.0, 0.0));
+            triangleGeometry.vertices.push(new THREE.Vector3(1.0, -1.0, 0.0));
+            triangleGeometry.faces.push(new THREE.Face3(0, 1, 2));
+            triangleGeometry.faces[0].vertexColors[0] = new THREE.Color(0xFF0000);
+            triangleGeometry.faces[0].vertexColors[1] = new THREE.Color(0x00FF00);
+            triangleGeometry.faces[0].vertexColors[2] = new THREE.Color(0x0000FF);
+            var triangleMaterial = new THREE.MeshBasicMaterial({
+                vertexColors: THREE.VertexColors,
+                side: THREE.DoubleSide
+            });
+            triangleMesh = new THREE.Mesh(triangleGeometry, triangleMaterial);
+            triangleMesh.position.set(-3, -1.0, 4.0);
+            scene.add(triangleMesh);
+
+            var triangleGeometry2 = new THREE.Geometry();
+            triangleGeometry2.vertices.push(new THREE.Vector3(0.0, 1.0, 0.0));
+            triangleGeometry2.vertices.push(new THREE.Vector3(0.0, -1.0, -1.0));
+            triangleGeometry2.vertices.push(new THREE.Vector3(0.0, -1.0, 1.0));
+            triangleGeometry2.faces.push(new THREE.Face3(0, 1, 2));
+            triangleGeometry2.faces[0].vertexColors[0] = new THREE.Color(0xFF0000);
+            triangleGeometry2.faces[0].vertexColors[1] = new THREE.Color(0x00FF00);
+            triangleGeometry2.faces[0].vertexColors[2] = new THREE.Color(0x0000FF);
+            var triangleMaterial2 = new THREE.MeshBasicMaterial({
+                vertexColors: THREE.VertexColors,
+                side: THREE.DoubleSide
+            });
+            triangleMesh2 = new THREE.Mesh(triangleGeometry2, triangleMaterial2);
+            triangleMesh2.position.set(-3, 0.0, 4.0);
+            scene.add(triangleMesh2);
+
+            var triangleGeometry3 = new THREE.Geometry();
+            triangleGeometry3.vertices.push(new THREE.Vector3(0.0, 1.0, 0.0));
+            triangleGeometry3.vertices.push(new THREE.Vector3(-1.0, -1.0, 0.0));
+            triangleGeometry3.vertices.push(new THREE.Vector3(1.0, -1.0, 0.0));
+            triangleGeometry3.faces.push(new THREE.Face3(0, 1, 2));
+            triangleGeometry3.faces[0].vertexColors[0] = new THREE.Color(0xFF0000);
+            triangleGeometry3.faces[0].vertexColors[1] = new THREE.Color(0x00FF00);
+            triangleGeometry3.faces[0].vertexColors[2] = new THREE.Color(0x0000FF);
+            var triangleMaterial3 = new THREE.MeshBasicMaterial({
+                vertexColors: THREE.VertexColors,
+                side: THREE.DoubleSide
+            });
+            triangleMesh3 = new THREE.Mesh(triangleGeometry3, triangleMaterial3);
+            triangleMesh3.position.set(-3, 1.0, 4.0);
+            scene.add(triangleMesh3);
+
+            var triangleGeometry4 = new THREE.Geometry();
+            triangleGeometry4.vertices.push(new THREE.Vector3(0.0, 1.0, 0.0));
+            triangleGeometry4.vertices.push(new THREE.Vector3(-1.0, -1.0, 0.0));
+            triangleGeometry4.vertices.push(new THREE.Vector3(1.0, -1.0, 0.0));
+            triangleGeometry4.faces.push(new THREE.Face3(0, 1, 2));
+            triangleGeometry4.faces[0].vertexColors[0] = new THREE.Color(0xFF0000);
+            triangleGeometry4.faces[0].vertexColors[1] = new THREE.Color(0x00FF00);
+            triangleGeometry4.faces[0].vertexColors[2] = new THREE.Color(0x0000FF);
+            var triangleMaterial4 = new THREE.MeshBasicMaterial({
+                vertexColors: THREE.VertexColors,
+                side: THREE.DoubleSide
+            });
+            triangleMesh4 = new THREE.Mesh(triangleGeometry4, triangleMaterial4);
+            triangleMesh4.position.set(-0.9, 1.0, 4.0);
+            scene.add(triangleMesh4);
+
+            var squareGeometry = new THREE.Geometry();
+            squareGeometry.vertices.push(new THREE.Vector3(-1.0, 1.0, 0.0));
+            squareGeometry.vertices.push(new THREE.Vector3(1.0, 1.0, 0.0));
+            squareGeometry.vertices.push(new THREE.Vector3(1.0, -1.0, 0.0));
+            squareGeometry.vertices.push(new THREE.Vector3(-1.0, -1.0, 0.0));
+            squareGeometry.faces.push(new THREE.Face3(0, 1, 2));
+            squareGeometry.faces.push(new THREE.Face3(0, 2, 3));
+            var squareMaterial = new THREE.MeshBasicMaterial({
+                color: 0x8080FF,
+                side: THREE.DoubleSide
+            });
+            squareMesh = new THREE.Mesh(squareGeometry, squareMaterial);
+            squareMesh.position.set(-0.9, -1.0, 4.0);
+            scene.add(squareMesh);
+
+            var squareGeometry2 = new THREE.Geometry();
+            squareGeometry2.vertices.push(new THREE.Vector3(-1.0, -0.3, 0.0));
+            squareGeometry2.vertices.push(new THREE.Vector3(1.0, -0.3, 0.0));
+            squareGeometry2.vertices.push(new THREE.Vector3(1.0, -1.0, 0.0));
+            squareGeometry2.vertices.push(new THREE.Vector3(-1.0, -1.0, 0.0));
+            //squareGeometry.faces.push(new THREE.Face4(0, 1, 2, 3));
+            squareGeometry2.faces.push(new THREE.Face3(0, 1, 2));
+            squareGeometry2.faces.push(new THREE.Face3(0, 2, 3));
+            var squareMaterial2 = new THREE.MeshBasicMaterial({
+                color: 0x8080FF,
+                side: THREE.DoubleSide
+            });
+            squareMesh2 = new THREE.Mesh(squareGeometry2, squareMaterial2);
+            squareMesh2.position.set(2.0, 0.0, 4.0);
+            scene.add(squareMesh2);
+
+            var squareGeometry3 = new THREE.Geometry();
+            squareGeometry3.vertices.push(new THREE.Vector3(-1.0, 0.0, 0.0));
+            squareGeometry3.vertices.push(new THREE.Vector3(0.5, 0.0, 0.0));
+            squareGeometry3.vertices.push(new THREE.Vector3(0.5, -1.0, 0.0));
+            squareGeometry3.vertices.push(new THREE.Vector3(-1.0, -1.0, 0.0));
+            //squareGeometry.faces.push(new THREE.Face4(0, 1, 2, 3));
+            squareGeometry3.faces.push(new THREE.Face3(0, 1, 2));
+            squareGeometry3.faces.push(new THREE.Face3(0, 2, 3));
+            var squareMaterial3 = new THREE.MeshBasicMaterial({
+                color: 0x8080FF,
+                side: THREE.DoubleSide
+            });
+            squareMesh3 = new THREE.Mesh(squareGeometry3, squareMaterial3);
+            squareMesh3.position.set(2.0, 0.0, 4.0);
+            scene.add(squareMesh3);
+
+            var geometry = new THREE.CircleGeometry(0.2, 32);
+            var material = new THREE.MeshBasicMaterial({
+                color: 0x16D313
+            });
+            circle = new THREE.Mesh(geometry, material);
+            circle.position.set(1.2, -1.1, 4.0);
+            scene.add(circle);
+
+            var geometry2 = new THREE.CircleGeometry(0.2, 32);
+            var material2 = new THREE.MeshBasicMaterial({
+                color: 0x16D313
+            });
+            circle2 = new THREE.Mesh(geometry2, material2);
+            circle2.position.set(2.8, -1.1, 4.0);
+            scene.add(circle2);
+
+
+            var pyramidGeometry = new THREE.CylinderGeometry(0.2, 0.9, 1.5, 50, false);
+            for (i = 0; i < pyramidGeometry.faces.length; i++) {
+                if (pyramidGeometry.faces[i] instanceof THREE.Face4) {
+                    pyramidGeometry.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    if ((i % 2) == 0) {
+                        pyramidGeometry.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                        pyramidGeometry.faces[i].vertexColors[2] = new THREE.Color(0x0099ff);
+                    } else {
+                        pyramidGeometry.faces[i].vertexColors[1] = new THREE.Color(0x005c99);
+                        pyramidGeometry.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                    }
+                    pyramidGeometry.faces[i].vertexColors[3] = new THREE.Color(0xccebff);
+                } else {
+                    pyramidGeometry.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    pyramidGeometry.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                    pyramidGeometry.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                }
+            }
+
+            var pyramidMaterial = new THREE.MeshBasicMaterial({
+                vertexColors: THREE.VertexColors,
+                side: THREE.DoubleSide
+            });
+
+            pyramidMesh = new THREE.Mesh(pyramidGeometry, pyramidMaterial);
+            pyramidMesh.position.set(2.0, 1.0, 4.0);
+            scene.add(pyramidMesh);
+
+
+            var pyramidGeometry2 = new THREE.CylinderGeometry(0.2, 1.2, 1.5, 50, false);
+            for (i = 0; i < pyramidGeometry2.faces.length; i++) {
+                if (pyramidGeometry2.faces[i] instanceof THREE.Face4) {
+                    pyramidGeometry2.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    if ((i % 2) == 0) {
+                        pyramidGeometry2.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                        pyramidGeometry2.faces[i].vertexColors[2] = new THREE.Color(0x0099ff);
+                    } else {
+                        pyramidGeometry2.faces[i].vertexColors[1] = new THREE.Color(0x005c99);
+                        pyramidGeometry2.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                    }
+                    pyramidGeometry2.faces[i].vertexColors[3] = new THREE.Color(0xccebff);
+                } else {
+                    pyramidGeometry2.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    pyramidGeometry2.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                    pyramidGeometry2.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                }
+            }
+
+            var pyramidMaterial2 = new THREE.MeshBasicMaterial({
+                vertexColors: THREE.VertexColors,
+                side: THREE.DoubleSide
+            });
+
+            pyramidMesh2 = new THREE.Mesh(pyramidGeometry2, pyramidMaterial2);
+            pyramidMesh2.position.set(2.0, 0.0, 4.0);
+            scene.add(pyramidMesh2);
+
+
+
+            var pyramidGeometry3 = new THREE.CylinderGeometry(0.2, 1.5, 1.5, 50, false);
+            for (i = 0; i < pyramidGeometry3.faces.length; i++) {
+                if (pyramidGeometry3.faces[i] instanceof THREE.Face4) {
+                    pyramidGeometry3.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    if ((i % 2) == 0) {
+                        pyramidGeometry3.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                        pyramidGeometry3.faces[i].vertexColors[2] = new THREE.Color(0x0099ff);
+                    } else {
+                        pyramidGeometry3.faces[i].vertexColors[1] = new THREE.Color(0x005c99);
+                        pyramidGeometry3.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                    }
+                    pyramidGeometry3.faces[i].vertexColors[3] = new THREE.Color(0xccebff);
+                } else {
+                    pyramidGeometry3.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    pyramidGeometry3.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                    pyramidGeometry3.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                }
+            }
+
+            var pyramidMaterial3 = new THREE.MeshBasicMaterial({
+                vertexColors: THREE.VertexColors,
+                side: THREE.DoubleSide
+            });
+
+            pyramidMesh3 = new THREE.Mesh(pyramidGeometry3, pyramidMaterial3);
+            pyramidMesh3.position.set(2.0, -1.0, 4.0);
+            scene.add(pyramidMesh3);
+        }
+
+
+        function animateScene() {
+
+            var rotation = 0.2137;
+            triangleMesh.rotation.y += rotation;
+            triangleMesh2.rotation.y += rotation;
+            triangleMesh3.rotation.y += rotation;
+
+            var movementRight = 0.009;
+            squareMesh2.position.x += movementRight;
+            squareMesh3.position.x += movementRight;
+            circle.position.x += movementRight;
+            circle2.position.x += movementRight;
+
+            var rotation2 = 0.01;
+            pyramidMesh.rotation.y += rotation2
+            pyramidMesh2.rotation.y += rotation2;
+            pyramidMesh3.rotation.y += rotation2;
+
+            requestAnimationFrame(animateScene);
+
+            renderScene();
+        }
+
+        function renderScene() {
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+
+</html>

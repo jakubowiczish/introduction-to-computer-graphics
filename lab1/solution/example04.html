@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Three.js tutorial - Lesson 05</title>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <style type="text/css">
+        body {
+            background-color: #000000;
+            overflow: hidden;
+        }
+    </style>
+    <script src="three.js"></script>
+    <script src="Detector.js"></script>
+</head>
+
+<body>
+    <div id="WebGLCanvas"> </div>
+
+    <script>
+        var scene;
+        var camera;
+
+        var pyramidMesh;
+        var pyramidMesh2;
+        var pyramidMesh3;
+
+        var cubeMesh;
+
+        initializeScene();
+        animateScene();
+
+
+        function initializeScene() {
+            if (Detector.webgl) {
+                renderer = new THREE.WebGLRenderer({
+                    antialias: true
+                });
+            } else {
+                renderer = new THREE.CanvasRenderer();
+            }
+
+            renderer.setClearColor(0x000000, 1);
+
+            canvasWidth = window.innerWidth;
+            canvasHeight = window.innerHeight;
+
+            renderer.setSize(canvasWidth, canvasHeight);
+
+            document.getElementById("WebGLCanvas").appendChild(renderer.domElement);
+
+            scene = new THREE.Scene();
+
+            camera = new THREE.PerspectiveCamera(45, canvasWidth / canvasHeight, 1, 100);
+            camera.position.set(0, 0, 10);
+            camera.lookAt(scene.position);
+            scene.add(camera);
+
+            var pyramidGeometry = new THREE.CylinderGeometry(0.2, 0.9, 1.5, 50, false);
+            for (i = 0; i < pyramidGeometry.faces.length; i++) {
+                if (pyramidGeometry.faces[i] instanceof THREE.Face4) {
+                    pyramidGeometry.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    if ((i % 2) == 0) {
+                        pyramidGeometry.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                        pyramidGeometry.faces[i].vertexColors[2] = new THREE.Color(0x0099ff);
+                    } else {
+                        pyramidGeometry.faces[i].vertexColors[1] = new THREE.Color(0x005c99);
+                        pyramidGeometry.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                    }
+                    pyramidGeometry.faces[i].vertexColors[3] = new THREE.Color(0xccebff);
+                } else {
+                    pyramidGeometry.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    pyramidGeometry.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                    pyramidGeometry.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                }
+            }
+
+            var pyramidMaterial = new THREE.MeshBasicMaterial({
+                vertexColors: THREE.VertexColors,
+                side: THREE.DoubleSide
+            });
+
+            pyramidMesh = new THREE.Mesh(pyramidGeometry, pyramidMaterial);
+            pyramidMesh.position.set(2.0, 1.0, 4.0);
+            scene.add(pyramidMesh);
+
+
+            var pyramidGeometry2 = new THREE.CylinderGeometry(0.2, 1.2, 1.5, 50, false);
+            for (i = 0; i < pyramidGeometry2.faces.length; i++) {
+                if (pyramidGeometry2.faces[i] instanceof THREE.Face4) {
+                    pyramidGeometry2.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    if ((i % 2) == 0) {
+                        pyramidGeometry2.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                        pyramidGeometry2.faces[i].vertexColors[2] = new THREE.Color(0x0099ff);
+                    } else {
+                        pyramidGeometry2.faces[i].vertexColors[1] = new THREE.Color(0x005c99);
+                        pyramidGeometry2.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                    }
+                    pyramidGeometry2.faces[i].vertexColors[3] = new THREE.Color(0xccebff);
+                } else {
+                    pyramidGeometry2.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    pyramidGeometry2.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                    pyramidGeometry2.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                }
+            }
+
+            var pyramidMaterial2 = new THREE.MeshBasicMaterial({
+                vertexColors: THREE.VertexColors,
+                side: THREE.DoubleSide
+            });
+
+            pyramidMesh2 = new THREE.Mesh(pyramidGeometry2, pyramidMaterial2);
+            pyramidMesh2.position.set(2.0, 0.0, 4.0);
+            scene.add(pyramidMesh2);
+
+
+
+            var pyramidGeometry3 = new THREE.CylinderGeometry(0.2, 1.5, 1.5, 50, false);
+            for (i = 0; i < pyramidGeometry3.faces.length; i++) {
+                if (pyramidGeometry3.faces[i] instanceof THREE.Face4) {
+                    pyramidGeometry3.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    if ((i % 2) == 0) {
+                        pyramidGeometry3.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                        pyramidGeometry3.faces[i].vertexColors[2] = new THREE.Color(0x0099ff);
+                    } else {
+                        pyramidGeometry3.faces[i].vertexColors[1] = new THREE.Color(0x005c99);
+                        pyramidGeometry3.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                    }
+                    pyramidGeometry3.faces[i].vertexColors[3] = new THREE.Color(0xccebff);
+                } else {
+                    pyramidGeometry3.faces[i].vertexColors[0] = new THREE.Color(0x80ccff);
+                    pyramidGeometry3.faces[i].vertexColors[1] = new THREE.Color(0x0099ff);
+                    pyramidGeometry3.faces[i].vertexColors[2] = new THREE.Color(0xccebff);
+                }
+            }
+
+            var pyramidMaterial3 = new THREE.MeshBasicMaterial({
+                vertexColors: THREE.VertexColors,
+                side: THREE.DoubleSide
+            });
+
+            pyramidMesh3 = new THREE.Mesh(pyramidGeometry3, pyramidMaterial3);
+            pyramidMesh3.position.set(2.0, -1.0, 4.0);
+            scene.add(pyramidMesh3);
+
+            var cubeGeometry = new THREE.CubeGeometry(1.5, 1.5, 1.5);
+            var cubeMaterials = [
+                new THREE.MeshBasicMaterial({
+                    color: 0xff4dff
+                }),
+                new THREE.MeshBasicMaterial({
+                    color: 0x0040ff
+                }),
+                new THREE.MeshBasicMaterial({
+                    color: 0x33ff77
+                }),
+                new THREE.MeshBasicMaterial({
+                    color: 0x33ffff
+                }),
+                new THREE.MeshBasicMaterial({
+                    color: 0xff9900
+                }),
+                new THREE.MeshBasicMaterial({
+                    color: 0x660066
+                })
+            ];
+
+
+            var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
+            cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
+            cubeMesh.position.set(-1.5, 0.0, 4.0);
+            scene.add(cubeMesh);
+
+
+        }
+
+        function animateScene() {
+            cubeMesh.rotateOnAxis(new THREE.Vector3(1, 1, 1).normalize(), 0.075);
+
+            var rotation2 = 0.01;
+            pyramidMesh.rotation.y += rotation2
+            pyramidMesh2.rotation.y += rotation2;
+            pyramidMesh3.rotation.y += rotation2;
+
+            requestAnimationFrame(animateScene);
+
+            renderScene();
+        }
+
+        function renderScene() {
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+
+</html>
